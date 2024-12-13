@@ -11,15 +11,13 @@ $error_message = '';
 $sucess_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Vérifier si l'ID est bien passé dans l'URL et qu'il est numérique
-    if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
+        if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
         header("Location: /contrats/contrat.php");
         exit;
     }
     $id = $_GET["id"];
 
-    // Si l'ID existe dans la base de données
-    $sql = "SELECT * FROM contrat WHERE NumContrat = ?";
+        $sql = "SELECT * FROM contrat WHERE NumContrat = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
     $stmt->execute();
@@ -30,35 +28,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error_message = "Le contrat avec l'ID spécifié n'existe pas.";
     }
 
-    // Récupérer les valeurs de la base pour les afficher dans le formulaire
-    $NumContrat = $row['NumContrat'];
+        $NumContrat = $row['NumContrat'];
     $DateDebut = $row['DateDebut'];
     $DateFin =  $row['DateFin'];
     $Duree =  $row['Duree'];
     $Num =  $row['Num'];
     $NumImmatriculation =  $row['NumImmatriculation'];
 
-    // Validation du formulaire
-    if (empty($_POST['NumContrat']) || empty($_POST['DateDebut']) || empty($_POST['DateFin']) || empty($_POST['Duree']) || empty($_POST['Num']) || empty($_POST['NumImmatriculation'])) {
+        if (empty($_POST['NumContrat']) || empty($_POST['DateDebut']) || empty($_POST['DateFin']) || empty($_POST['Duree']) || empty($_POST['Num']) || empty($_POST['NumImmatriculation'])) {
         $error_message = 'Tous les champs sont obligatoires.';
     } else {
-        // Assigner les nouvelles valeurs envoyées par le formulaire
-        $NumContrat =  $_POST['NumContrat'];
+                $NumContrat =  $_POST['NumContrat'];
         $DateDebut =  $_POST['DateDebut'];
         $DateFin =   $_POST['DateFin'];
         $Duree =   $_POST['Duree'];
         $Num =   $_POST['Num'];
         $NumImmatriculation =  $_POST['NumImmatriculation'];
 
-        // Préparer la requête de mise à jour
-        $sql = "UPDATE contrat SET DateDebut = ?, DateFin = ?, Duree = ?, Num = ?, NumImmatriculation = ? WHERE NumContrat = ?";
+                $sql = "UPDATE contrat SET DateDebut = ?, DateFin = ?, Duree = ?, Num = ?, NumImmatriculation = ? WHERE NumContrat = ?";
         $stmt = $conn->prepare($sql);
         if ($stmt === false) {
             $error_message = 'Erreur de préparation de la requête: ' . $conn->error;
         } else {
             $stmt->bind_param("sssssi", $DateDebut, $DateFin, $Duree, $Num, $NumImmatriculation, $NumContrat);
-            // Exécuter la requête
-            if ($stmt->execute()) {
+                        if ($stmt->execute()) {
                 $sucess_message = 'Le contrat a bien été modifié.';
                 header("Location: /contrats/contrat.php");
                 exit;
@@ -68,12 +61,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 } else {
-    // Vérification si l'ID existe et est numérique
-    if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
+        if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
         $id = $_GET["id"];
 
-        // Récupérer les données du contrat à modifier
-        $sql = "SELECT * FROM contrat WHERE NumContrat = ?";
+                $sql = "SELECT * FROM contrat WHERE NumContrat = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
@@ -119,11 +110,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                                        echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                                        echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
             </div>
@@ -138,11 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                                        echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                                        echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
             </div>

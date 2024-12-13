@@ -58,10 +58,8 @@
                 
             <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
                     echo '<p >Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a class="deconnect" href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
                     echo '<p ><a href="/athentification/login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
@@ -82,7 +80,6 @@
     </div>
 </section>
 
-<!-- Formulaire de recherche rapide -->
 <section class="search-form" id="reservation">
     <h2>Trouver votre voiture en quelques clics</h2>
     <form>
@@ -93,7 +90,6 @@
     </form>
 </section>
 
-<!-- Voitures populaires -->
 <section class="featured-cars">
     <h2>Nos voitures populaires</h2>
     <div class="car-list">
@@ -118,7 +114,6 @@
     </div>
 </section>
 
-<!-- Pourquoi nous choisir -->
 <section class="why-choose-us">
     <h2>Pourquoi choisir CarFlex ?</h2>
     <div class="benefits">
@@ -137,7 +132,6 @@
     </div>
 </section>
 
-<!-- Footer -->
 <footer>
     <p>&copy; 2024 CarFlex - Location de voitures. Tous droits réservés.</p>
 </footer>

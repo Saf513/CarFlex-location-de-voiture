@@ -18,19 +18,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (empty($name) || empty($adress) || empty($tel)) {
         $error_message = 'Tous les champs sont obligatoires.';
     } else {
-        // Préparer la requête d'insertion sans inclure 'Num' (auto-incrémenté)
-        $sql = "INSERT INTO clients (Nom, Adresse, Tel) VALUES (?, ?, ?)";
+                $sql = "INSERT INTO clients (Nom, Adresse, Tel) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sss", $name, $adress, $tel);  // Utilisation de "sss" car tous les paramètres sont des chaînes
-
-        // Exécution de la requête
-        if ($stmt->execute()) {
+        $stmt->bind_param("sss", $name, $adress, $tel);  
+                if ($stmt->execute()) {
             $name = '';
             $adress = '';
             $tel = '';
             $sucess_message = 'Client ajouté avec succès!';
-            // Redirection après l'ajout
-            header("Location: /Clients/clients.php");
+                        header("Location: /Clients/clients.php");
             exit;
         } else {
             $error_message = "Erreur lors de l'ajout du client : " . $stmt->error;
@@ -64,11 +60,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                                        echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                                        echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
             </div>
@@ -83,11 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                                        echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                                        echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
             </div>

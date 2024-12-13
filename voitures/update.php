@@ -8,7 +8,6 @@ $annee = '';
 $error_message = '';
 $sucess_message = '';
 
-// Vérification de l'ID dans l'URL
 if (isset($_GET["id"]) && is_string($_GET["id"])) {
     $NumImmatriculation = $_GET["id"];
 } else {
@@ -17,17 +16,14 @@ if (isset($_GET["id"]) && is_string($_GET["id"])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Récupérer les valeurs du formulaire
-    $model = $_POST['Model'];
+        $model = $_POST['Model'];
     $marque = $_POST['Marque'];
     $annee = $_POST['Annee'];
 
-    // Validation des champs
-    if (empty($model) || empty($marque) || empty($annee)) {
+        if (empty($model) || empty($marque) || empty($annee)) {
         $error_message = 'Tous les champs sont obligatoires.';
     } else {
-        // Mise à jour des informations dans la base de données
-        $sql = "UPDATE voitures SET Model = ?, Marque = ?, Annee = ? WHERE NumImmatriculation = ?";
+                $sql = "UPDATE voitures SET Model = ?, Marque = ?, Annee = ? WHERE NumImmatriculation = ?";
         $stmt = $conn->prepare($sql);
         if ($stmt === false) {
             $error_message = 'Erreur de préparation de la requête de mise à jour : ' . $conn->error;
@@ -36,8 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             if ($stmt->execute()) {
                 $sucess_message = 'La voiture a bien été modifiée.';
-                // Rediriger vers la page des voitures après la mise à jour
-                header("Location: /voitures/voitures.php");
+                                header("Location: /voitures/voitures.php");
                 exit;
             } else {
                 $error_message = "Erreur lors de la mise à jour : " . $stmt->error;
@@ -45,8 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 } else {
-    // Si ce n'est pas une requête POST, récupérer les informations de la voiture à modifier
-    $sql = "SELECT * FROM voitures WHERE NumImmatriculation = ?";
+        $sql = "SELECT * FROM voitures WHERE NumImmatriculation = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $NumImmatriculation);
     $stmt->execute();
@@ -54,8 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $row = $result->fetch_assoc();
 
     if ($row) {
-        // Récupérer les données de la voiture
-        $NumImmatriculation = $row['NumImmatriculation'];
+                $NumImmatriculation = $row['NumImmatriculation'];
         $marque = $row['Marque'];
         $model = $row['Model'];
         $annee = $row['Annee'];
@@ -91,11 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                                        echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                                        echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
             </div>
@@ -110,11 +101,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                                        echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                                        echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
             </div>

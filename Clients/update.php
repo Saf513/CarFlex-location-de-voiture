@@ -20,14 +20,12 @@ $error_message = '';
 $sucess_message = '';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Vérifier si l'ID est bien passé dans l'URL et qu'il est numérique
     if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
         header("Location: /Clients/clients.php");
         exit;
     }
     $id = $_GET["id"];
 
-    // Si l'ID existe dans la base de données
     $sql = "SELECT * FROM clients WHERE Num = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $id);
@@ -40,26 +38,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit;
     }
 
-    // Récupérer les valeurs de la base pour les afficher dans le formulaire
     $name = $row['Nom'];
     $adress = $row['Adresse'];
     $tel = $row['Tel'];
 
-    // Validation du formulaire
     if (empty($_POST['Nom']) || empty($_POST['Adresse']) || empty($_POST['Tel'])) {
         $error_message = 'Tous les champs sont obligatoires.';
     } else {
-        // Assigner les nouvelles valeurs envoyées par le formulaire
         $name = $_POST['Nom'];
         $adress = $_POST['Adresse'];
         $tel = $_POST['Tel'];
 
-        // Préparer la requête de mise à jour
         $sql = "UPDATE clients SET Nom = ?, Adresse = ?, Tel = ? WHERE Num = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssi", $name, $adress, $tel, $id);
 
-        // Exécuter la requête
         if ($stmt->execute()) {
             $sucess_message = 'Le client a bien été modifié.';
             header("Location: /Clients/clients.php");
@@ -69,11 +62,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 } else {
-    // Vérification si l'ID existe et est numérique
     if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
         $id = $_GET["id"];
 
-        // Récupérer les données du client à modifier
         $sql = "SELECT * FROM clients WHERE Num = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
@@ -117,10 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
                     echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
                     echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>
@@ -136,10 +125,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
                 <?php
                 if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
                     echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
                 } else {
-                    // L'utilisateur n'est pas connecté
                     echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
                 }
                 ?>

@@ -208,7 +208,6 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Recherche rapide */
 .search-form {
     text-align: center;
     padding: 50px 20px;
@@ -230,7 +229,6 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Voitures populaires */
 .featured-cars {
     padding: 50px 20px;
     text-align: center;
@@ -275,7 +273,6 @@ button:hover {
     border-radius: 5px;
 }
 
-/* Pourquoi nous choisir */
 .why-choose-us {
     padding: 50px 20px;
     text-align: center;
@@ -300,7 +297,6 @@ button:hover {
     color: #777;
 }
 
-/* Footer */
 footer {
     text-align: center;
     padding: 20px;
@@ -318,7 +314,6 @@ footer {
     display: none;
 }
 
-/* Tablette (écrans jusqu'à 768px de large) */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -371,15 +366,13 @@ footer {
     display: none;
     }
 
-    /* Redimensionner les éléments de la table */
-    table {
+        table {
         width: 90%;
         margin-left: auto;
         margin-right: auto;
     }
 
-    /* Hero Section */
-    .hero {
+        .hero {
         height: 300px;
         background-size: cover;
         background-position: center;
@@ -411,7 +404,6 @@ footer {
     }
 }
 
-/* Bureau (écrans de plus de 768px de large) */
 @media (min-width: 768px) {
     .navbar {
         justify-content: space-between;
@@ -459,7 +451,6 @@ footer {
     }
 }
 
-/* Desktop (écrans de plus de 1024px de large) */
 @media (min-width: 1024px) {
     .navbar {
         justify-content: space-between;
@@ -524,7 +515,6 @@ footer {
     background-color: #f1f1f1;
 }
 
-/* Vue d'ensemble */
 .overview {
     margin-top: 40px;
 }
@@ -544,36 +534,30 @@ footer {
 
 .overview-section li {
     margin: 5px 0;
-}/* Global container style */
-.container {
+}.container {
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
 }
 
-/* Header section (entete) */
 .entete {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #111; /* Dark background for the header */
-    padding: 20px;
+    background-color: #111;     padding: 20px;
     border-radius: 8px;
     margin-bottom: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .entete h1 {
-    color: #fff; /* White text color */
-    font-size: 28px;
+    color: #fff;     font-size: 28px;
     font-weight: 600;
 }
 
 .entete button {
-    background-color: #ff8c00; /* Orange button background */
-    color: #fff; /* White text */
-    font-size: 16px;
+    background-color: #ff8c00;     color: #fff;     font-size: 16px;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
@@ -587,16 +571,11 @@ footer {
 }
 
 .entete button:hover {
-    background-color: #e87a00; /* Darker orange when hovered */
-    transform: scale(1.05); /* Slightly enlarge the button on hover */
-}
+    background-color: #e87a00;     transform: scale(1.05); }
 
 .entete button:focus {
-    outline: none; /* Remove outline on focus */
-    box-shadow: 0 0 10px rgba(255, 140, 0, 0.8); /* Highlight the button */
-}
+    outline: none;     box-shadow: 0 0 10px rgba(255, 140, 0, 0.8); }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .entete {
         flex-direction: column;
@@ -623,77 +602,32 @@ footer {
         padding: 8px 16px;
     }
 }
-/* Style des boutons "Supprimer" et "Modifier" */
 button.supprimer, .modifier {
-    display: inline-block; /* S'assurer que les éléments sont en ligne */
-    padding: 10px 20px; /* Espacement autour du texte */
-    border-radius: 5px; /* Coins arrondis */
-    text-align: center; /* Centrer le texte dans le bouton */
-    cursor: pointer; /* Changer le curseur pour signaler l'interactivité */
-    font-size: 16px; /* Taille de la police */
-    font-weight: bold; /* Police en gras pour plus de visibilité */
-    text-decoration: none; /* Supprimer la décoration de lien par défaut */
-    transition: all 0.3s ease; /* Transition fluide pour les effets */
-}
+    display: inline-block;     padding: 10px 20px;     border-radius: 5px;     text-align: center;     cursor: pointer;     font-size: 16px;     font-weight: bold;     text-decoration: none;     transition: all 0.3s ease; }
 
-/* Style pour le bouton "Supprimer" */
 button.supprimer {
-    background-color: #e74c3c; /* Fond rouge pour "Supprimer" */
-    color: white; /* Texte blanc */
-    border: none; /* Aucune bordure */
-}
+    background-color: #e74c3c;     color: white;     border: none; }
 
 button.supprimer:hover {
-    background-color: #c0392b; /* Couleur plus sombre au survol */
-    transform: scale(1.1); /* Agrandir légèrement le bouton au survol */
-}
+    background-color: #c0392b;     transform: scale(1.1); }
 
 button.supprimer:active {
-    background-color: #a93226; /* Couleur encore plus sombre lors du clic */
-    transform: scale(1); /* Réinitialiser l'agrandissement après le clic */
-}
+    background-color: #a93226;     transform: scale(1); }
 
-/* Style pour le lien "Modifier" */
 .modifier {
-    background-color: #dd9219; /* Fond orange pour "Modifier" */
-    color: white; /* Texte blanc */
-    padding: 10px 20px; /* Espacement autour du texte */
-    border-radius: 5px; /* Coins arrondis */
-    font-size: 16px; /* Taille de la police */
-    font-weight: bold; /* Police en gras */
-    text-align: center; /* Centrer le texte */
-    text-decoration: none; /* Supprimer la décoration de lien */
-    display: inline-block; /* Pour que le lien se comporte comme un bouton */
-    transition: all 0.3s ease; /* Transition flu
-}
-    .modifier:hover {
-    background-color: #e67e22; /* Couleur plus foncée au survol */
-    transform: scale(1.1); /* Agrandir légèrement le bouton au survol */
-}
+    background-color: #dd9219;     color: white;     padding: 10px 20px;     border-radius: 5px;     font-size: 16px;     font-weight: bold;     text-align: center;     text-decoration: none;     display: inline-block;     transition: all 0.3s ease;     transform: scale(1.1); }
 
 .modifier:active {
-    background-color: #d35400; /* Couleur encore plus sombre lors du clic */
-    transform: scale(1); /* Réinitialiser l'agrandissement après le clic */
-}
+    background-color: #d35400;     transform: scale(1); }
 
-/* Effet de survol global pour les liens dans les boutons */
 button.supprimer a, .modifier a {
-    color: white; /* Assurer que le texte reste blanc */
-    text-decoration: none; /* Supprimer la décoration de lien */
-}
+    color: white;     text-decoration: none; }
 
-/* Animation de suppression et modification */
 button.supprimer:hover, .modifier:hover {
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Ombre légère pour un effet de survol */
-    transition: all 0.3s ease-in-out; /* Transition douce pour l'ombre et l'agrandissement */
-}
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);     transition: all 0.3s ease-in-out; }
 
-/* Animation sur la suppression pour rendre l'effet plus visible */
 button.supprimer:active {
-    transform: translateY(2px); /* Déplacer légèrement le bouton vers le bas lors du clic */
-}
+    transform: translateY(2px); }
 
-/* Animation sur la modification pour rendre l'effet plus visible */
 .modifier:active {
-    transform: translateY(2px); /* Déplacer légèrement le bouton vers le bas lors du clic */
-}
+    transform: translateY(2px); }
