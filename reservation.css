@@ -1,0 +1,195 @@
+/* Style global de la page */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Style pour la barre de navigation */
+nav {
+    background-color: #2c3e50;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+}
+
+
+nav .logo img {
+    width: 150px;
+}
+
+nav .login {
+    font-size: 16px;
+}
+
+nav .section {
+    display: flex;
+    list-style-type: none;
+}
+
+nav .section li {
+    margin: 0 10px;
+}
+
+nav .section li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+nav .section li a:hover {
+    color: #f39c12;
+}
+
+nav .burgerMenu button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+}
+
+/* Style pour la section principale */
+.container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+input, select, button {
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+input[type="date"] {
+    width: 48%;
+    margin-right: 4%;
+}
+
+input[type="date"]:last-child {
+    margin-right: 0;
+}
+
+button {
+    background-color: #f39c12;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #e67e22;
+}
+
+button:active {
+    background-color: #d35400;
+}
+
+/* Style de la section pour l'écran mobile */
+@media (max-width: 768px) {
+    nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    nav .logo {
+        margin-bottom: 10px;
+    }
+
+    nav .section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .container {
+        width: 95%;
+    }
+
+    input[type="date"] {
+        width: 100%;
+        margin-right: 0;
+    }
+}
+
+/* Style de la section pour l'écran mobile avec menu burger */
+@media (max-width: 576px) {
+    #desktop {
+        display: none;
+    }
+
+    #mobile {
+        display: block;
+    }
+
+    #section-burger {
+        display: none;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background-color: #2c3e50;
+        width: 100%;
+        padding: 20px;
+        list-style-type: none;
+    }
+
+    #section-burger li {
+        margin: 10px 0;
+    }
+
+    #section-burger li a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    #section-burger li a:hover {
+        color: #f39c12;
+    }
+
+    .burgerMenu button {
+        display: block;
+        background-color: transparent;
+        border: none;
+        color: white;
+        font-size: 24px;
+    }
+
+    .burgerMenu button:hover {
+        color: #f39c12;
+    }
+
+    .burgerMenu.active ~ #section-burger {
+        display: block;
+    }
+}

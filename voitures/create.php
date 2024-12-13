@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $sql = "INSERT INTO voitures  VALUES (?, ?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("sssi", $NumImmatriculation, $model, $marque, $annee);  // Utilisation de "sss" car tous les paramètres sont des chaînes
+        $stmt->bind_param("ssss", $NumImmatriculation, $model, $marque, $annee);  // Utilisation de "sss" car tous les paramètres sont des chaînes
 
         // Exécution de la requête
         if ($stmt->execute()) {
@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
     </nav>
     <nav id="mobile">
-    <div class="logo"><a href="/admin_dashboard.php"><img src="/img/CarFlex.png" alt=""></a></div>
+    <div class="logo"><a href=""><img src="/img/CarFlex.png" alt=""></a></div>
     <div class="login">
             <div class="logo-login">
                 
@@ -118,7 +118,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         ?>
 
-        <h1>Modifier la Voiture :</h1>
+        <h1>Ajouter la Voiture :</h1>
 
         <form method="post">
 
@@ -139,7 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             <div class="annee">
                 <label for="annee">L'Année :</label>
-                <input type="text" name="Annee" value="<?php echo $annee; ?>">
+                <input type="text" name="Annee">
             </div>
 
             <!-- Affichage du message de succès -->

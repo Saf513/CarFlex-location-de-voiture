@@ -122,17 +122,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <form method="post">
             <div class="nom">
                 <label for="nom">Le Nom :</label>
-                <input type="text" name="nom" value="<?php echo $name; ?>">
+                <input type="text" name="nom" value="" placeholder="Votre nom">
             </div>
 
             <div class="adresse">
                 <label for="adresse">L'Adresse:</label>
-                <input type="text" name="adresse" value="<?php echo $adress; ?>">
+                <input type="text" name="adresse" value="" placeholder="Votre Adresse">
             </div>
 
             <div class="tel">
                 <label for="tel">Le téléphone :</label>
-                <input type="text" name="tel" value="<?php echo $tel; ?>">
+                <input type="text" name="tel" value="" placeholder="Votre numero de telephone">
             </div>
 
             <!-- Affichage du message de succès -->

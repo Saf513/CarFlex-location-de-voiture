@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $error_message = "Identifiants incorrects.";
         }
     } else {
-        $error_message = "Aucun utilisateur trouvé.";
+        $error_message = "Identifiants incorrects.";
     }
 }
 ?>

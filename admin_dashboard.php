@@ -1,7 +1,11 @@
 <?php
+    include "./configuration/connection.php";
+    include "./athentification/userValidation.php";
+
     if(!$_COOKIE['token']) {
         header("Location: http://localhost:3000/athentification/login.php");
     }
+    $user = userValidation($conn);
 ?>
 
 
@@ -12,7 +16,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tableau de Bord Admin</title>
-    <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
         /* Définition des couleurs */
@@ -40,8 +43,9 @@ body {
     align-items: center;
     background-color: var(--noir);
     color: var(--blanc);
-    padding: 20px 30px;
     width: 100%;
+    padding-top: 10px;
+    padding-bottom: 15px;
 }
 
 .navbar h2 {
@@ -156,7 +160,7 @@ footer p {
         </div>
         <div>
             <?php  ?>
-            <p>Bienvenue, <?php echo 'Hello'; ?> | <a href="athentification\logout.php">Se déconnecter</a></p>
+            <p style="margin-right: 30px;">Bienvenue, <?php echo $user['nom'] ?? ''; ?> | <a href="athentification\logout.php">Se déconnecter</a></p>
         </div>
     </nav>
 

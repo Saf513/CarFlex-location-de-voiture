@@ -318,6 +318,7 @@ footer {
     display: none;
 }
 
+/* Tablette (écrans jusqu'à 768px de large) */
 @media (max-width: 768px) {
     .navbar {
         flex-direction: column;
@@ -543,4 +544,156 @@ footer {
 
 .overview-section li {
     margin: 5px 0;
+}/* Global container style */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header section (entete) */
+.entete {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #111; /* Dark background for the header */
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.entete h1 {
+    color: #fff; /* White text color */
+    font-size: 28px;
+    font-weight: 600;
+}
+
+.entete button {
+    background-color: #ff8c00; /* Orange button background */
+    color: #fff; /* White text */
+    font-size: 16px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.entete button a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.entete button:hover {
+    background-color: #e87a00; /* Darker orange when hovered */
+    transform: scale(1.05); /* Slightly enlarge the button on hover */
+}
+
+.entete button:focus {
+    outline: none; /* Remove outline on focus */
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.8); /* Highlight the button */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .entete {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .entete h1 {
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .entete button {
+        width: 100%;
+        margin-top: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .entete h1 {
+        font-size: 20px;
+    }
+
+    .entete button {
+        padding: 8px 16px;
+    }
+}
+/* Style des boutons "Supprimer" et "Modifier" */
+button.supprimer, .modifier {
+    display: inline-block; /* S'assurer que les éléments sont en ligne */
+    padding: 10px 20px; /* Espacement autour du texte */
+    border-radius: 5px; /* Coins arrondis */
+    text-align: center; /* Centrer le texte dans le bouton */
+    cursor: pointer; /* Changer le curseur pour signaler l'interactivité */
+    font-size: 16px; /* Taille de la police */
+    font-weight: bold; /* Police en gras pour plus de visibilité */
+    text-decoration: none; /* Supprimer la décoration de lien par défaut */
+    transition: all 0.3s ease; /* Transition fluide pour les effets */
+}
+
+/* Style pour le bouton "Supprimer" */
+button.supprimer {
+    background-color: #e74c3c; /* Fond rouge pour "Supprimer" */
+    color: white; /* Texte blanc */
+    border: none; /* Aucune bordure */
+}
+
+button.supprimer:hover {
+    background-color: #c0392b; /* Couleur plus sombre au survol */
+    transform: scale(1.1); /* Agrandir légèrement le bouton au survol */
+}
+
+button.supprimer:active {
+    background-color: #a93226; /* Couleur encore plus sombre lors du clic */
+    transform: scale(1); /* Réinitialiser l'agrandissement après le clic */
+}
+
+/* Style pour le lien "Modifier" */
+.modifier {
+    background-color: #dd9219; /* Fond orange pour "Modifier" */
+    color: white; /* Texte blanc */
+    padding: 10px 20px; /* Espacement autour du texte */
+    border-radius: 5px; /* Coins arrondis */
+    font-size: 16px; /* Taille de la police */
+    font-weight: bold; /* Police en gras */
+    text-align: center; /* Centrer le texte */
+    text-decoration: none; /* Supprimer la décoration de lien */
+    display: inline-block; /* Pour que le lien se comporte comme un bouton */
+    transition: all 0.3s ease; /* Transition flu
+}
+    .modifier:hover {
+    background-color: #e67e22; /* Couleur plus foncée au survol */
+    transform: scale(1.1); /* Agrandir légèrement le bouton au survol */
+}
+
+.modifier:active {
+    background-color: #d35400; /* Couleur encore plus sombre lors du clic */
+    transform: scale(1); /* Réinitialiser l'agrandissement après le clic */
+}
+
+/* Effet de survol global pour les liens dans les boutons */
+button.supprimer a, .modifier a {
+    color: white; /* Assurer que le texte reste blanc */
+    text-decoration: none; /* Supprimer la décoration de lien */
+}
+
+/* Animation de suppression et modification */
+button.supprimer:hover, .modifier:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Ombre légère pour un effet de survol */
+    transition: all 0.3s ease-in-out; /* Transition douce pour l'ombre et l'agrandissement */
+}
+
+/* Animation sur la suppression pour rendre l'effet plus visible */
+button.supprimer:active {
+    transform: translateY(2px); /* Déplacer légèrement le bouton vers le bas lors du clic */
+}
+
+/* Animation sur la modification pour rendre l'effet plus visible */
+.modifier:active {
+    transform: translateY(2px); /* Déplacer légèrement le bouton vers le bas lors du clic */
 }

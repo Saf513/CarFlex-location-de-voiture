@@ -1,15 +1,3 @@
-<?php
-
-session_start();
-
-// Vérifier si l'utilisateur est connecté, si non, rediriger vers la page de connexion
-if (!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])) {
-    // L'utilisateur n'est pas connecté, rediriger vers la page de connexion
-    header("Location: /athentification/login.php");
-    exit();
-}
-?>
-
 
 
 <!DOCTYPE html>
@@ -20,6 +8,7 @@ if (!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])) {
     <meta name="viewport" content="wNumth=device-wNumth, initial-scale=1.0">
     <title>CarFlex</title>
     <link rel="stylesheet" href="/style.css">
+    
 </head>
 
 <body>
@@ -113,10 +102,11 @@ if (!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])) {
             <td>{$row['Model']}</td>
             <td>{$row['Annee']}</td>
             <td>
-                <a href='/voitures/delete.php?id={$row['NumImmatriculation']}'>Supprimer</a>
+                          <button class='supprimer' > <a href='/voitures/delete.php?id={$row['NumImmatriculation']}'>Supprimer</a></button>
+ 
             </td>
             <td>
-                <a href='/voitures/update.php?id={$row['NumImmatriculation']}'>Modifier</a>
+            <button class='supprimer' > <a href='/voitures/update.php?id={$row['NumImmatriculation']}'>Modifier</a></button>
             </td>
         </tr>
         ";
@@ -130,3 +120,4 @@ if (!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])) {
 </body>
 
 </html>
+

@@ -1,14 +1,4 @@
-<?php
 
-session_start();
-
-// Vérifier si l'utilisateur est connecté, si non, rediriger vers la page de connexion
-if (!isset($_SESSION['user_id']) && !isset($_COOKIE['user_id'])) {
-    // L'utilisateur n'est pas connecté, rediriger vers la page de connexion
-    header("Location: /athentification/login.php");
-    exit();
-}
-?>
 
 
 

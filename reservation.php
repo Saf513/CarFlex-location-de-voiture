@@ -28,19 +28,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Réservation de Voiture</title>
+    <link rel="stylesheet" href="/reservation.css">
     <link rel="stylesheet" href="/style.css">
 </head>
 
 <body>
     <nav class="navbar" id="desktop">
         <div class="logo"><a href="/index.php"><img src="/img/CarFlex.png" alt=""></a></div>
-        <div>
-            <ul class="section">
-                <li><a href="/voitures/voitures.php">Voitures</a></li>
-                <li><a href="/Clients/clients.php">Clients</a></li>
-                <li><a href="/contrats/contrat.php">Contrats</a></li>
-            </ul>
-        </div>
+        
         <div class="login">
             <div class="logo-login">
 
