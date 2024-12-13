@@ -8,47 +8,25 @@ $annee = '';
 $error_message = '';
 $sucess_message = '';
 
+// Vérification de l'ID dans l'URL
+if (isset($_GET["id"]) && is_string($_GET["id"])) {
+    $NumImmatriculation = $_GET["id"];
+} else {
+    header("Location: /voitures/voitures.php");
+    exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Vérifier si l'ID est bien passé dans l'URL et qu'il est numérique
-    if (!isset($_GET["id"]) || !is_numeric($_GET["id"])) {
-        header("Location: /voitures/voitures.php");
-        exit;
-    }
-    $id = $_GET["id"];
+    // Récupérer les valeurs du formulaire
+    $model = $_POST['Model'];
+    $marque = $_POST['Marque'];
+    $annee = $_POST['Annee'];
 
-    // Si l'ID existe dans la base de données
-    $sql = "SELECT * FROM voitures WHERE NumImmatriculation = ?";
-    $stmt = $conn->prepare($sql);
-    if ($stmt === false) {
-        $error_message = 'Erreur de préparation de la requête de sélection : ' . $conn->error;
-    } else {
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        if (!$row) {
-            $error_message = "Aucune voiture trouvée avec cet immatriculation.";
-        }
-
-        // Récupérer les valeurs de la base pour les afficher dans le formulaire
-        $NumImmatriculation = $row['NumImmatriculation'];
-        $marque = $row['Marque'];
-        $model = $row['Model'];
-        $annee = $row['Annee'];
-    }
-
-    // Validation du formulaire
-    if (empty($_POST['NumImmatriculation']) || empty($_POST['Model']) || empty($_POST['Marque']) || empty($_POST['Annee'])) {
+    // Validation des champs
+    if (empty($model) || empty($marque) || empty($annee)) {
         $error_message = 'Tous les champs sont obligatoires.';
     } else {
-        // Assigner les nouvelles valeurs envoyées par le formulaire
-        $NumImmatriculation = $_POST['NumImmatriculation'];
-        $model = $_POST['Model'];
-        $marque = $_POST['Marque'];
-        $annee = $_POST['Annee'];
-
-        // Préparer la requête de mise à jour
+        // Mise à jour des informations dans la base de données
         $sql = "UPDATE voitures SET Model = ?, Marque = ?, Annee = ? WHERE NumImmatriculation = ?";
         $stmt = $conn->prepare($sql);
         if ($stmt === false) {
@@ -56,9 +34,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             $stmt->bind_param("ssss", $model, $marque, $annee, $NumImmatriculation);
 
-            // Exécuter la requête
             if ($stmt->execute()) {
                 $sucess_message = 'La voiture a bien été modifiée.';
+                // Rediriger vers la page des voitures après la mise à jour
                 header("Location: /voitures/voitures.php");
                 exit;
             } else {
@@ -67,24 +45,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 } else {
-    // Vérification si l'ID existe et est numérique
-    if (isset($_GET["id"]) && is_numeric($_GET["id"])) {
-        $id = $_GET["id"];
+    // Si ce n'est pas une requête POST, récupérer les informations de la voiture à modifier
+    $sql = "SELECT * FROM voitures WHERE NumImmatriculation = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $NumImmatriculation);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
 
-        // Récupérer les données de la voiture à modifier
-        $sql = "SELECT * FROM voitures WHERE NumImmatriculation = ?";
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        if ($row) {
-            $NumImmatriculation = $row['NumImmatriculation'];
-            $marque = $row['Marque'];
-            $model = $row['Model'];
-            $annee = $row['Annee'];
-        }
+    if ($row) {
+        // Récupérer les données de la voiture
+        $NumImmatriculation = $row['NumImmatriculation'];
+        $marque = $row['Marque'];
+        $model = $row['Model'];
+        $annee = $row['Annee'];
+    } else {
+        $error_message = "Aucune voiture trouvée avec cet immatriculation.";
     }
 }
 
@@ -101,20 +77,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-<nav class="navbar">
-    <div class="logo"><a href="/index.html"><img src="/img/CarFlex.png" alt=""></a></div>
-    <div>
-        <ul class="section">
-            <li><a href="/voitures/voitures.php">Voitures</a></li>
-            <li> <a href="/Clients/clients.php">Clients</a></li>
-            <li><a href="/contrats/contrat.php">Contrats</a></li>
-        </ul>
+<nav class="navbar" id="desktop">
+        <div class="logo"><a href="/index.php"><img src="/img/CarFlex.png" alt=""></a></div>
+        <div>
+            <ul class="section">
+                <li><a href="/voitures/voitures.php">Voitures</a></li>
+                <li><a href="/Clients/clients.php">Clients</a></li>
+                <li><a href="/contrats/contrat.php">Contrats</a></li>
+            </ul>
+        </div>
+        <div class="login">
+            <div class="logo-login">
+                
+                <?php
+                if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
+                    // L'utilisateur est connecté
+                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                } else {
+                    // L'utilisateur n'est pas connecté
+                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                }
+                ?>
+            </div>
+        </div>
+
         
-    </div>
+    </nav>
+    <nav id="mobile">
+    <div class="logo"><a href="/admin_dashboard.php"><img src="/img/CarFlex.png" alt=""></a></div>
     <div class="login">
-        <div class="logo-login"> <p><a href="/athentification/login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p></div>
-    </div>
-   </nav> 
+            <div class="logo-login">
+                
+                <?php
+                if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
+                    // L'utilisateur est connecté
+                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                } else {
+                    // L'utilisateur n'est pas connecté
+                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                }
+                ?>
+            </div>
+            <div class="burgerMenu">
+            <button><i class="fa-solid fa-bars fa-2x" style="color: #0d0d0d;"></i></button>
+        </div>
+        </div>
+       
+    </nav>
+    <div>
+            <ul class="section" id="section-burger">
+                <li><a href="/voitures/voitures.php">Voitures</a></li>
+                <li><a href="/Clients/clients.php">Clients</a></li>
+                <li><a href="/contrats/contrat.php">Contrats</a></li>
+            </ul>
+        </div>
 
     <div class="container-creat">
         <!-- Affichage du message d'erreur -->
@@ -128,24 +144,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <form method="post">
 
-            <div class="NumImmatriculation">
-                <label for="NumImmatriculation">Numéro d'Immatriculation :</label>
-                <input type="text" name="NumImmatriculation" value="<?php echo $NumImmatriculation; ?>" readonly>
-            </div>
-
             <div class="marque">
                 <label for="marque">La Marque :</label>
-                <input type="text" name="Marque" value="<?php echo $marque; ?>">
+                <input type="text" name="Marque" value="<?php echo htmlspecialchars($marque); ?>">
             </div>
 
             <div class="model">
                 <label for="model">Le Modèle :</label>
-                <input type="text" name="Model" value="<?php echo $model; ?>">
+                <input type="text" name="Model" value="<?php echo htmlspecialchars($model); ?>">
             </div>
 
             <div class="annee">
                 <label for="annee">L'Année :</label>
-                <input type="text" name="Annee" value="<?php echo $annee; ?>">
+                <input type="text" name="Annee" value="<?php echo htmlspecialchars($annee); ?>">
             </div>
 
             <!-- Affichage du message de succès -->

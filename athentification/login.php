@@ -1,75 +1,98 @@
 <?php
+// session_start();
+// if (isset($_SESSION['token']) && isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
+//     header('Location: admin_dashboard.php'); // Rediriger vers le tableau de bord admin si déjà connecté
+//     exit();
+// }
 
-setcookie('name', 'safia', strtotime("+1year"));
+include('C:/Users/ycode/location-de-voitures/configuration/connection.php');
 
-echo '<pre>';
-print_r($_COOKIE) ;
-echo' </pre>';
+// Vérification de la soumission du formulaire
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
 
+    // Recherche de l'utilisateur dans la base de données
+    $sql = "SELECT * FROM users WHERE email = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+
+        // Vérification du mot de passe
+        if (password_verify($password, $user['password'])) {
+            // Créer un token d'authentification unique (par exemple en utilisant la fonction uniqid)
+            $token = bin2hex(random_bytes(32)); // Génère un token unique de 32 octets
+            
+            // Stocker le token dans la session
+            setcookie('token', $token, time() + 3600 , "/");
+            /*$_SESSION['user_id'] = $user['id'];
+            $_SESSION['nom'] = $user['nom'];
+            $_SESSION['role'] = $user['role'];*/
+
+            // Enregistrer le token dans la base de données pour l'utilisateur
+            $sql_update_token = "UPDATE users SET token = ? WHERE id = ?";
+            $stmt_update_token = $conn->prepare($sql_update_token);
+            $stmt_update_token->bind_param('si', $token, $user['id']);
+            $stmt_update_token->execute();
+
+            // Rediriger l'utilisateur en fonction de son rôle
+            if ($user['role'] == 'admin') {
+                header('Location: /admin_dashboard.php');
+            } else {
+                header('Location: /index.php');
+            }
+            exit();
+        } else {
+            $error_message = "Identifiants incorrects.";
+        }
+    } else {
+        $error_message = "Aucun utilisateur trouvé.";
+    }
+}
 ?>
 
 
-
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarFlex</title>
-</head>
-<body>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de Connexion</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Connexion</title>
+    <link rel="stylesheet" href="/form.css">
 </head>
+
 <body>
-<nav class="navbar">
-    <div class="logo"><a href="/index.html"><img src="/img/CarFlex.png" alt=""></a></div>
-    <div>
-        <ul class="section">
-            <li><a href="/voitures/voitures.php">Voitures</a></li>
-            <li> <a href="/Clients/clients.php">Clients</a></li>
-            <li><a href="/contrats/contrat.php">Contrats</a></li>
-        </ul>
-        
-    </div>
-    <div class="login">
-        <div class="logo-login"> <p><a href="/athentification/login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p></div>
-    </div>
-   </nav> 
-    <div class="container1">
-    <div class="login-container">
-        <form class="login-form">
-            <h2>Se connecter</h2>
+    
 
+
+    <div class="container">
+        <!-- Affichage du message d'erreur -->
+        <?php
+        if (!empty($error_message)) {
+            echo "<div class='alert-warning' role='alert'><strong>$error_message</strong></div>";
+        }
+        ?>
+
+        <h1>Se connecter</h1>
+
+        <form method="POST">
             <div class="input-group">
-                <label for="username">Nom d'utilisateur :</label>
-                <input type="text" id="username" name="username" required>
+                <label for="email">Email :</label>
+                <input type="email" name="email" required>
             </div>
-
             <div class="input-group">
                 <label for="password">Mot de passe :</label>
-                <input type="password" id="password" name="password" required>
+                <input type="password" name="password" required>
             </div>
-
-            <div class="action">
-                <button type="submit">Se connecter</button>
-            </div>
-
-            <div class="footer">
-                <p>Pas de compte ? <a href="/athentification/inscreption.php">S'inscrire ici</a></p>
-            </div>
+            <button type="submit">Se connecter</button>
+            <button type="submit"><a href="/athentification/inscreption.php">S'inscrire</a></button>
         </form>
     </div>
-    </div>
-
 </body>
-</html>
 
-</body>
 </html>

@@ -50,20 +50,60 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </head>
 
 <body>
-<nav class="navbar">
-    <div class="logo"><a href="/index.html"><img src="/img/CarFlex.png" alt=""></a></div>
-    <div>
-        <ul class="section">
-            <li><a href="/voitures/voitures.php">Voitures</a></li>
-            <li> <a href="/Clients/clients.php">Clients</a></li>
-            <li><a href="/contrats/contrat.php">Contrats</a></li>
-        </ul>
+<nav class="navbar" id="desktop">
+        <div class="logo"><a href="/admin_dashboard.php"><img src="/img/CarFlex.png" alt=""></a></div>
+        <div>
+            <ul class="section">
+                <li><a href="/voitures/voitures.php">Voitures</a></li>
+                <li><a href="/Clients/clients.php">Clients</a></li>
+                <li><a href="/contrats/contrat.php">Contrats</a></li>
+            </ul>
+        </div>
+        <div class="login">
+            <div class="logo-login">
+                
+                <?php
+                if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
+                    // L'utilisateur est connecté
+                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                } else {
+                    // L'utilisateur n'est pas connecté
+                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                }
+                ?>
+            </div>
+        </div>
+
         
-    </div>
+    </nav>
+    <nav id="mobile">
+    <div class="logo"><a href="/index.php"><img src="/img/CarFlex.png" alt=""></a></div>
     <div class="login">
-        <div class="logo-login"> <p><a href="/athentification/login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p></div>
-    </div>
-   </nav> 
+            <div class="logo-login">
+                
+                <?php
+                if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
+                    // L'utilisateur est connecté
+                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
+                } else {
+                    // L'utilisateur n'est pas connecté
+                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
+                }
+                ?>
+            </div>
+            <div class="burgerMenu">
+            <button><i class="fa-solid fa-bars fa-2x" style="color: #0d0d0d;"></i></button>
+        </div>
+        </div>
+       
+    </nav>
+    <div>
+            <ul class="section" id="section-burger">
+                <li><a href="/voitures/voitures.php">Voitures</a></li>
+                <li><a href="/Clients/clients.php">Clients</a></li>
+                <li><a href="/contrats/contrat.php">Contrats</a></li>
+            </ul>
+        </div>
 
     <div class="container-creat">
         <!-- Affichage du message d'erreur -->

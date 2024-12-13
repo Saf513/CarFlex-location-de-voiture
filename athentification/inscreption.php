@@ -1,125 +1,139 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CarFlex</title>
-</head>
-<body>
+<?php
+// Inclusion du fichier de connexion à la base de données
+include('C:/Users/ycode/location-de-voitures/configuration/connection.php');
+
+$nom = '';
+$email = '';
+$password = '';
+$password_confirm = '';
+$role = 'user'; // Rôle par défaut
+$token = ''; // Le token sera généré automatiquement
+$error_message = '';
+$success_message = '';
+
+// Traitement du formulaire d'inscription
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $nom = $_POST['nom'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password_confirm = $_POST['password_confirm'];
+    $role = $_POST['role']; // Récupérer le rôle choisi
+
+    // Validation des champs
+    if (empty($nom) || empty($email) || empty($password) || empty($password_confirm)) {
+        $error_message = 'Tous les champs sont obligatoires.';
+    } elseif ($password !== $password_confirm) {
+        // Vérifier si les mots de passe correspondent
+        $error_message = 'Les mots de passe ne correspondent pas.';
+    } else {
+        // Vérifier si l'utilisateur existe déjà
+        $sql_check_user = "SELECT * FROM users WHERE email = ?";
+        $stmt_check = $conn->prepare($sql_check_user);
+        $stmt_check->bind_param('s', $email);
+        $stmt_check->execute();
+        $result = $stmt_check->get_result();
+
+        if ($result->num_rows > 0) {
+            $error_message = 'Cet email est déjà utilisé.';
+        } else {
+            // Hacher le mot de passe
+            $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+            // Générer un token unique
+            $token = bin2hex(random_bytes(32));  // Génère un token de 64 caractères
+
+            // Insertion de l'utilisateur dans la base de données
+            $sql_insert = "INSERT INTO users (nom, email, password, role, token) VALUES (?, ?, ?, ?, ?)";
+            $stmt_insert = $conn->prepare($sql_insert);
+            $stmt_insert->bind_param('sssss', $nom, $email, $hashed_password, $role, $token);
+
+            if ($stmt_insert->execute()) {
+                // Inscription réussie
+                $success_message = 'Inscription réussie ! Vous pouvez vous connecter maintenant.';
+
+                // Récupérer l'ID de l'utilisateur nouvellement inscrit
+                $user_id = $conn->insert_id;
+
+                // Créer un cookie pour l'utilisateur
+                // setcookie('user_id', $user_id, time() + 3600, '/'); // Expire dans 1 heure
+                // setcookie('nom', $nom, time() + 3600, '/'); // Cookie pour le nom d'utilisateur
+                // setcookie('role', $role, time() + 3600, '/'); // Cookie pour le rôle
+                setcookie('token', $token, time() + 3600, '/'); // Cookie pour le token
+
+                // Rediriger vers la page en fonction du rôle
+                if ($role == 'admin') {
+                    header('Location: /dashboard.php'); // Redirection vers voitures.php pour les admins
+                } else {
+                    header('Location: /index.php'); 
+                }
+                exit(); // Terminer l'exécution du script
+            } else {
+                $error_message = 'Erreur lors de l\'inscription. Veuillez réessayer.';
+            }
+        }
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Page de Connexion</title>
-    <link rel="stylesheet" href="/style.css">
+    <title>Page d'Inscription</title>
+    <link rel="stylesheet" href="../form.css">
 </head>
 <body>
-<nav class="navbar">
-    <div class="logo"><a href="/index.html"><img src="/img/CarFlex.png" alt=""></a></div>
-    <div>
-        <ul class="section">
-            <li><a href="/voitures/voitures.php">Voitures</a></li>
-            <li> <a href="/Clients/clients.php">Clients</a></li>
-            <li><a href="/contrats/contrat.php">Contrats</a></li>
-        </ul>
-        
-    </div>
-    <div class="login">
-        <div class="logo-login"> <p><a href="/athentification/login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p></div>
-    </div>
-   </nav> 
-
-    <div class="container1">
-    
-       <div class="inter-container">
-         
-       <form action="#" method="POST">
+    <div class="container">
         <h2>Inscription</h2>
+
+        <!-- Affichage du message d'erreur -->
+        <?php
+        if (!empty($error_message)) {
+            echo "<div class='error'>$error_message</div>";
+        }
+
+        // Affichage du message de succès
+        if (!empty($success_message)) {
+            echo "<div class='success'>$success_message</div>";
+        }
+        ?>
+
+        <form method="POST">
             <div class="input-group">
-                <label for="username">Nom complet</label>
-                <input type="text" id="username" name="username" required placeholder="Votre nom complet">
+                <label for="nom">Nom d'utilisateur:</label>
+                <input type="text" id="nom" name="nom" value="<?php echo $nom; ?>" required>
             </div>
 
             <div class="input-group">
-                <label for="email">Email</label>
-                <input type="email" id="email" name="email" required placeholder="Votre adresse email">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" value="<?php echo $email; ?>" required>
             </div>
 
             <div class="input-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" id="password" name="password" required placeholder="Votre mot de passe">
+                <label for="password">Mot de passe:</label>
+                <input type="password" id="password" name="password" required>
             </div>
 
             <div class="input-group">
-                <label for="confirm-password">Confirmer le mot de passe</label>
-                <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirmer le mot de passe">
+                <label for="password_confirm">Confirmer le mot de passe:</label>
+                <input type="password" id="password_confirm" name="password_confirm" required>
             </div>
 
-            <button type="submit" class="btn">S'inscrire</button>
+            <div class="input-group">
+                <label for="role">Rôle:</label>
+                <select name="role" id="role" required>
+                    <option value="user" <?php echo ($role == 'user') ? 'selected' : ''; ?>>Utilisateur</option>
+                    <option value="admin" <?php echo ($role == 'admin') ? 'selected' : ''; ?>>Administrateur</option>
+                </select>
+            </div>
 
-            <p class="login-link">Vous avez déjà un compte ? <a href="login.html">Connectez-vous</a></p>
+            <div class="input-group">
+                <button type="submit">S'inscrire</button>
+            </div>
         </form>
-       </div>
+
+        <p>Vous avez déjà un compte ? <a href="/athentification/login.php">Se connecter</a></p>
     </div>
-
-    <script>
-        // Validation basique du formulaire
-        const form = document.getElementById('signup-form');
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            let valid = true;
-
-            // Validation du nom d'utilisateur
-            const username = document.getElementById('username');
-            const usernameError = document.getElementById('username-error');
-            if (username.value.trim() === '') {
-                valid = false;
-                usernameError.style.display = 'block';
-            } else {
-                usernameError.style.display = 'none';
-            }
-
-            // Validation de l'email
-            const email = document.getElementById('email');
-            const emailError = document.getElementById('email-error');
-            const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-            if (!emailRegex.test(email.value)) {
-                valid = false;
-                emailError.style.display = 'block';
-            } else {
-                emailError.style.display = 'none';
-            }
-            
-
-            // Validation du mot de passe
-            const password = document.getElementById('password');
-            const passwordError = document.getElementById('password-error');
-            if (password.value.trim() === '') {
-                valid = false;
-                passwordError.style.display = 'block';
-            } else {
-                passwordError.style.display = 'none';
-            }
-
-            // Validation de la confirmation du mot de passe
-            const confirmPassword = document.getElementById('confirm-password');
-            const confirmPasswordError = document.getElementById('confirm-password-error');
-            if (confirmPassword.value !== password.value) {
-                valid = false;
-                confirmPasswordError.style.display = 'block';
-            } else {
-                confirmPasswordError.style.display = 'none';
-            }
-
-            // Si le formulaire est valide
-            if (valid) {
-                alert('Inscription réussie!');
-                // Ici, vous pouvez ajouter la logique pour envoyer les données à votre serveur
-            }
-        });
-    </script>
 </body>
-
 </html>

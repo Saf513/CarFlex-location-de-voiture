@@ -1,0 +1,168 @@
+/* Style général */
+body {
+    font-family: 'Arial', sans-serif;
+    background: url(./img/bg-principlae.jpg) no-repeat ; /* Fond noir */
+    color: #fff;  /* Texte blanc pour un bon contraste */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Conteneur principal du formulaire */
+.container {
+    background-color: #fff;  /* Fond blanc pour le formulaire */
+    color: #333;  /* Texte noir pour une bonne lisibilité */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+   margin-left: 5rem;
+}
+
+/* Titre de la page */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #ff6600;  /* Couleur orange */
+}
+
+/* Style des groupes de champs de saisie */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: #ff6600;  /* Bordure orange au focus */
+}
+
+/* Style du bouton de soumission */
+.input-group button {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff6600;  /* Bouton orange */
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.input-group button:hover {
+    background-color: #e65c00;  /* Bouton orange plus foncé au survol */
+}
+
+/* Style des messages d'erreur et de succès */
+.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+}
+
+.success {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+}
+
+/* Style du lien de connexion */
+p {
+    text-align: center;
+    font-size: 14px;
+}
+
+p a {
+    color: #ff6600;  /* Lien orange */
+    text-decoration: none;
+}
+
+p a:hover {
+    text-decoration: underline;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #ff6600;  /* Couleur orange */
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+button[type="submit"]:hover {
+    background-color: #e65c00; /* Teinte plus foncée au survol */
+}
+
+/* Style pour le bouton "S'inscrire" */
+button[type="submit"] a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+button[type="submit"] a:hover {
+    color: #fff; /* Maintient la couleur blanche au survol */
+}
+
+/* Bouton de redirection vers l'inscription */
+button[type="submit"]:nth-child(2) {
+    background-color: #333;  /* Couleur noire */
+    color: white;
+}
+
+button[type="submit"]:nth-child(2):hover {
+    background-color: #444; /* Teinte plus foncée pour le bouton "S'inscrire" */
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    h2 {
+        font-size: 20px;
+    }
+
+    .input-group input,
+    .input-group select,
+    .input-group button {
+        font-size: 14px;
+    }
+}
