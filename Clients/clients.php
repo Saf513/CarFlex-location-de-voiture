@@ -1,4 +1,13 @@
 
+<?php
+    include "../configuration/connection.php";
+    include "../athentification/userValidation.php";
+
+    if(!$_COOKIE['token']) {
+        header("Location: http://localhost:3000/athentification/login.php");
+    }
+    $user = userValidation($conn);
+?>
 
 
 <!DOCTYPE html>
@@ -22,19 +31,10 @@
                 <li><a href="/contrats/contrat.php">Contrats</a></li>
             </ul>
         </div>
-        <div class="login">
-            <div class="logo-login">
-                
-                <?php
-                if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p>Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a href="athentification/logout.php">Se déconnecter</a></p>';
-                } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
-                }
-                ?>
-            </div>
+        <div>
+            <?php  ?>
+            <p style="margin-right: 30px;">Bienvenue, <?php echo $user['nom'] ?? ''; ?> | <a href="athentification\logout.php">Se déconnecter</a></p>
+        </div>
         </div>
 
         

@@ -1,24 +1,13 @@
+
+
 <?php
+    include "./configuration/connection.php";
+    include "./athentification/userValidation.php";
 
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Récupérer les données du formulaire
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $car_model = $_POST['car_model'];
-    $start_date = $_POST['start_date'];
-    $end_date = $_POST['end_date'];
-
-    // Ajouter une logique de traitement ici (par exemple, insertion dans la base de données)
-
-    // Exemple de message de confirmation (vous pouvez remplacer cela par une insertion dans la base de données)
-    echo "<p>Réservation effectuée avec succès !</p>";
-    echo "<p>Nom: $name</p>";
-    echo "<p>Email: $email</p>";
-    echo "<p>Voiture réservée: $car_model</p>";
-    echo "<p>Date de début: $start_date</p>";
-    echo "<p>Date de fin: $end_date</p>";
-}
+    if(!$_COOKIE['token']) {
+        header("Location: http://localhost:3000/athentification/login.php");
+    }
+    $user = userValidation($conn);
 ?>
 
 <!DOCTYPE html>
@@ -36,51 +25,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="navbar" id="desktop">
         <div class="logo"><a href="/index.php"><img src="/img/CarFlex.png" alt=""></a></div>
         
-        <div class="login">
-            <div class="logo-login">
 
-                <?php
-                if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p >Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a class="deconnect" href="athentification/logout.php">Se déconnecter</a></p>';
-                } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p  ><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
-                }
-                ?>
-            </div>
+        <div>
+            <?php  ?>
+            <p style="margin-right: 30px;">Bienvenue, <?php echo $user['nom'] ?? ''; ?> | <a href="athentification\logout.php">Se déconnecter</a></p>
         </div>
-
-
     </nav>
-    <nav id="mobile">
-        <div class="logo"><a href="/index.php"><img src="/img/CarFlex.png" alt=""></a></div>
-        <div class="login">
-            <div class="logo-login">
-
-                <?php
-                if (isset($_COOKIE['user_id']) && isset($_COOKIE['user_email'])) {
-                    // L'utilisateur est connecté
-                    echo '<p >Bonjour, ' . htmlspecialchars($_COOKIE['nom']) . ' | <a class="deconnect" href="athentification/logout.php">Se déconnecter</a></p>';
-                } else {
-                    // L'utilisateur n'est pas connecté
-                    echo '<p  ><a href="athentification\login.php"><i class="fa-solid fa-right-to-bracket fa-2x" style="color: #19191a;"></i></a></p>';
-                }
-                ?>
-            </div>
-            <div class="burgerMenu">
-                <button><i class="fa-solid fa-bars fa-2x" style="color: #0d0d0d;"></i></button>
-            </div>
-        </div>
-
-    </nav>
-    <div>
-        <ul class="section" id="section-burger">
-            <li><a href="/voitures/voitures.php">Voitures</a></li>
-            <li><a href="/Clients/clients.php">Clients</a></li>
-            <li><a href="/contrats/contrat.php">Contrats</a></li>
-        </ul>
-    </div>
+    
 
     <section>
         <div class="container">

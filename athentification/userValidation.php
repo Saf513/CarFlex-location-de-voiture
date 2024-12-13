@@ -1,5 +1,5 @@
 <?php
-    include "./configuration/connection.php";
+    include "../configuration/connection.php";
 
 function userValidation($conn) {
     $token = $_COOKIE['token'];

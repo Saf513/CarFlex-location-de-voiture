@@ -1,4 +1,16 @@
+
 <?php
+    include "../configuration/connection.php";
+    include "../athentification/userValidation.php";
+
+    if(!$_COOKIE['token']) {
+        header("Location: http://localhost:3000/athentification/login.php");
+    }
+    $user = userValidation($conn);
+?>
+
+<?php
+
 include('C:/Users/ycode/location-de-voitures/configuration/connection.php');
 
 $name = '';
